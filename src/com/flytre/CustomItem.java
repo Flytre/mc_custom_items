@@ -1,3 +1,5 @@
+package com.flytre;
+
 interface CustomItem {
 
 

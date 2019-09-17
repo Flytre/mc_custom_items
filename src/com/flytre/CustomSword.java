@@ -1,3 +1,5 @@
+package com.flytre;
+
 public class CustomSword implements CustomItem  {
 
     private final String id;

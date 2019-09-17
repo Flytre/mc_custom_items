@@ -1,3 +1,5 @@
+package com.flytre;
+
 public class CustomAbility implements CustomItem {
 
     private String id;
