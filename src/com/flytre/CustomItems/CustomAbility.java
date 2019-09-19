@@ -1,4 +1,6 @@
-package com.flytre;
+package com.flytre.CustomItems;
+
+import com.flytre.InvalidItemException;
 
 public class CustomAbility implements CustomItem {
 
@@ -6,8 +8,6 @@ public class CustomAbility implements CustomItem {
     private String displayName;
     private int cooldown;
     private String sound;
-    private String circleParticleName;
-    private double circleParticleRadius;
     private String[] effect;
     private String message;
 
@@ -33,19 +33,10 @@ public class CustomAbility implements CustomItem {
             throw new InvalidItemException("overTimeDuration","over-time effect duration must be less than the cooldown");
 
 
-        if(builder.circleParticleRadius > 0 && builder.circleParticleName == null)
-            throw new InvalidItemException("circleParticleRadius","requires a circle particle name");
-
-        if(builder.circleParticleRadius <= 2 && builder.circleParticleName != null)
-            throw new InvalidItemException("circleParticleRadius","must be at least 2");
-
-
         this.id = builder.id;
         this.displayName = builder.displayName;
         this.cooldown = builder.cooldown;
         this.sound = builder.sound;
-        this.circleParticleName = builder.circleParticleName;
-        this.circleParticleRadius = builder.circleParticleRadius;
         this.effect = builder.effect;
         this.overTimeEffect = builder.overTimeEffect;
         this.overTimeDuration = builder.overTimeDuration;
@@ -67,14 +58,6 @@ public class CustomAbility implements CustomItem {
 
     public String getSound() {
         return sound;
-    }
-
-    public String getCircleParticleName() {
-        return circleParticleName;
-    }
-
-    public double getCircleParticleRadius() {
-        return circleParticleRadius;
     }
 
     public String[] getEffect() {
@@ -99,8 +82,6 @@ public class CustomAbility implements CustomItem {
         private String displayName;
         private int cooldown = 30;
         private String sound = null;
-        private String circleParticleName = null;
-        private double circleParticleRadius = -1.0;
         private String[] effect = null;
         private String[] overTimeEffect = null;
         private int overTimeDuration = 0;
@@ -124,16 +105,6 @@ public class CustomAbility implements CustomItem {
 
         public Builder sound(String s) {
             sound = s;
-            return this;
-        }
-
-        public Builder circleParticleName(String s) {
-            circleParticleName = s;
-            return this;
-        }
-
-        public Builder circleParticleRadius(double d) {
-            circleParticleRadius = d;
             return this;
         }
 

@@ -1,5 +1,8 @@
 package com.flytre;
 
+import com.flytre.CustomItems.*;
+import com.flytre.Particles.ParticleShape;
+
 import java.text.DecimalFormat;
 
 class Implementer {
@@ -69,6 +72,11 @@ class Implementer {
         FunctionWriter.makeFunction("shield_base");
         FunctionWriter.addStatment("generic_base", "function flytre:shield_base");
         FunctionWriter.addObj("shieldblock", "minecraft.custom:minecraft.damage_blocked_by_shield");
+    }
+
+    static void initializeArmor() {
+        FunctionWriter.makeFunction("armor_base");
+        FunctionWriter.addStatment("generic_base", "function flytre:armor_base");
     }
 
 
@@ -189,23 +197,6 @@ class Implementer {
 
         FunctionWriter.addStatment("abilities/" + ability.getId(), "scoreboard players set @s " + ability.getId() + "_cd " + (ability.getCooldown() * -20));
 
-        if (ability.getCircleParticleName() != null && ability.getCircleParticleRadius() > 0) {
-
-            int degreeRotation = (int) (360 / (Math.PI * 0.75 * 2 * ability.getCircleParticleRadius()));
-            FunctionWriter.makeFunction("abilities/" + ability.getId() + "_circle_2");
-            FunctionWriter.addStatment("abilities/" + ability.getId() + "_circle_2", "particle " + ability.getCircleParticleName() + " ^ ^ ^" + ability.getCircleParticleRadius() + " 0 0 0 0 1 force");
-            FunctionWriter.addStatment("abilities/" + ability.getId() + "_circle_2", "tp @s ~ ~ ~ ~" + degreeRotation + " ~");
-            FunctionWriter.addStatment("abilities/" + ability.getId() + "_circle_2", "execute unless entity @s[y_rotation=0.." + degreeRotation + "] at @s run function flytre:abilities/" + ability.getId() + "_circle_2");
-
-            FunctionWriter.makeFunction("abilities/" + ability.getId() + "_circle");
-            FunctionWriter.addStatment("abilities/" + ability.getId() + "_circle", "summon armor_stand ~ ~ ~ {Tags:[" + ability.getId() + "_c],NoGravity:1b,Small:1,Marker:1b,Invisible:1,Invulnerable:1,NoBasePlate:1,PersistenceRequired:1,DisabledSlots:2039583}");
-            FunctionWriter.addStatment("abilities/" + ability.getId() + "_circle", "execute as @e[tag=" + ability.getId() + "_c,type=armor_stand] at @s run tp @s ~ ~ ~ " + (degreeRotation + 1) + " 0");
-            FunctionWriter.addStatment("abilities/" + ability.getId() + "_circle", "execute as @e[tag=" + ability.getId() + "_c,type=armor_stand] at @s run function flytre:abilities/" + ability.getId() + "_circle_2");
-            FunctionWriter.addStatment("abilities/" + ability.getId() + "_circle", "kill @e[type=armor_stand,tag=" + ability.getId() + "_c]");
-
-
-        }
-
         if (ability.getOverTimeEffect() != null && ability.getOverTimeDuration() > 0)
             for (String s : ability.getOverTimeEffect()) {
                 FunctionWriter.makeFunction("abilities/" + ability.getId() + "_time");
@@ -306,6 +297,12 @@ class Implementer {
 
     }
 
+    static void addArmor(CustomArmor armor) {}
+
+    static void addParticle(ParticleShape p) {
+        p.write();
+    }
+
     static void postInitializeBow() {
 
         FunctionWriter.addStatment("bow_arrow_init", "execute as @e[type=arrow,tag=!custom_arrow,tag=!init,limit=1] at @s run function flytre:bow_arrow_init");
@@ -336,6 +333,7 @@ class Implementer {
         FunctionWriter.addStatment("shield_base", "scoreboard players set @a[scores={shieldblock=1..}] shieldblock 0");
     }
 
-    static void postInitializeShield() {
-    }
+    static void postInitializeShield() { }
+    
+    static void postInitializeArmor() { }
 }

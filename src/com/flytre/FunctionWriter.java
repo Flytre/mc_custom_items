@@ -4,7 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-class FunctionWriter {
+public class FunctionWriter {
 
     private static final String dataLoc = "flytre_custom_items/data";
 
@@ -39,7 +39,7 @@ class FunctionWriter {
                 "}");
     }
 
-     static void makeFunction(String name) {
+     public static void makeFunction(String name) {
         FileHandler.setOutput(dataLoc + "/flytre/functions/" + name + ".mcfunction");
 
         FileHandler.print("####################################################################################################");
@@ -58,7 +58,7 @@ class FunctionWriter {
     }
 
 
-     static void addStatment(String func, String statment) {
+     public static void addStatment(String func, String statment) {
         FileHandler.setOutput(dataLoc + "/flytre/functions/"+func+".mcfunction");
 
         FileHandler.print(statment);

@@ -1,4 +1,6 @@
-package com.flytre;
+package com.flytre.CustomItems;
+
+import com.flytre.InvalidItemException;
 
 public class CustomTrident implements CustomItem {
 

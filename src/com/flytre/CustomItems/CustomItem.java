@@ -1,6 +1,8 @@
-package com.flytre;
+package com.flytre.CustomItems;
 
-interface CustomItem {
+import com.flytre.InvalidItemException;
+
+public interface CustomItem {
 
 
     String getId();
