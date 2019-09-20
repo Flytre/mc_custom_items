@@ -3,7 +3,7 @@
 **Version 0.1**
 
 
-Current Contains a basic API for making:
+Currently Contains a basic API for making:
 
 -Custom Weapons/Armors
 
