@@ -3,6 +3,7 @@ package com.flytre;
 import com.flytre.CustomItems.*;
 import com.flytre.Particles.ParticleCircle;
 import com.flytre.Particles.ParticleShape;
+import com.flytre.Particles.ParticleSphere;
 
 import java.util.ArrayList;
 
@@ -71,7 +72,7 @@ public class CustomItemUI {
             } else if (i instanceof CustomArmor) {
                 if (!armor) Implementer.initializeArmor();
                 armor = true;
-                Implementer.addShield((CustomShield) i);
+                Implementer.addArmor((CustomArmor) i);
 
             }
 
@@ -88,16 +89,24 @@ public class CustomItemUI {
 
     public static void main(String[] args) {
 
-        ParticleShape flamer = new ParticleCircle("flame",2.0,"flame");
+        ParticleShape cloudy = new ParticleCircle("cloud_circle",10.0,"cloud");
+        ParticleShape flamer = new ParticleSphere("flame_sphere",5.0,"flame");
 
+        addParticle(cloudy);
+        addParticle(flamer);
+
+
+        CustomArmor.Builder armor = new CustomArmor.Builder("trollish").effect("effect give @s regeneration 100 0").parts("clb");
         CustomBow.Builder explosive = new CustomBow.Builder("explosive").effect("summon fireball ~ ~ ~ {direction:[0.0,-100.0,0.0],ExplosionPower:5.5,Motion:[0.0,-1.0,0.0]}").trail("flame");
         CustomBow.Builder warp = new CustomBow.Builder("warp").effect("tp @a[tag=bow_warp] @s").trail("portal").addPlayerSelector(true);
         CustomSword.Builder barbed = new CustomSword.Builder("barbed").effect("effect give @s minecraft:slowness 1 1").particle("cloud");
-        CustomAbility.Builder test = new CustomAbility.Builder("test").cooldown(45).effect("summon creeper").overTimeEffect("function flytre:abilities/test_circle").overTimeDuration(2).message("You are testing this build");
-        CustomAbility.Builder circler = new CustomAbility.Builder("circler").cooldown(20).overTimeEffect("function flytre:abilities/circler_circle").overTimeDuration(19).message("Activating the circler!");
+        CustomAbility.Builder test = new CustomAbility.Builder("test").cooldown(45).effect("summon creeper").overTimeEffect("function flytre:particles/cloud_circle").overTimeDuration(2).message("You are testing this build");
+        CustomAbility.Builder circler = new CustomAbility.Builder("circler").cooldown(20).overTimeEffect("function flytre:particles/flame_sphere").overTimeDuration(19).message("Activating the circler!");
         CustomTrident.Builder trident = new CustomTrident.Builder("squeaker").type("hurt_entity").effect("summon lightning_bolt").runEffectTypeHurtEntityIfNoHurtEntity(true).addPlayerSelector(true);
         CustomShield.Builder shield = new CustomShield.Builder("lit").passiveEffect("effect give @e[type=!player,distance=..4] wither 1 1 true").effect("effect give @s regeneration 1 1 true");
 
+
+        addItem(armor);
         addItem(explosive);
         addItem(warp);
         addItem(barbed);

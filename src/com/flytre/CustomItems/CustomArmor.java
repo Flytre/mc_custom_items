@@ -27,20 +27,24 @@ public class CustomArmor implements CustomItem {
 
     @Override
     public String getId() {
-        return null;
+        return id;
     }
 
     @Override
     public String getDisplayName() {
-        return null;
+        return displayName;
     }
 
     @Override
     public String[] getEffect() {
-        return new String[0];
+        return effect;
     }
 
-    public static class Builder {
+    public String getParts() {
+        return parts;
+    }
+
+    public static class Builder implements CustomItem.Builder {
         private String id;
         private String displayName;
         private String parts = "hclb";

@@ -8,7 +8,6 @@ import java.text.DecimalFormat;
 class Implementer {
 
 
-
     private static int enderIDCounter = 2;
 
     static void initialize() {
@@ -283,13 +282,13 @@ class Implementer {
 
         if (shield.getEffect() != null)
             for (String s : shield.getEffect())
-                FunctionWriter.addStatment("shield_base", "execute as @a[scores={shieldblock=1..},nbt={SelectedItem:{tag:{ability:\""+shield.getId()+"\"}}}] at @s run " + s);
+                FunctionWriter.addStatment("shield_base", "execute as @a[scores={shieldblock=1..},nbt={SelectedItem:{tag:{ability:\"" + shield.getId() + "\"}}}] at @s run " + s);
 
 
         if (shield.getPassiveEffect() != null)
             for (String s : shield.getPassiveEffect()) {
                 FunctionWriter.addStatment("shield_base", "execute as @a[nbt={SelectedItem:{tag:{ability:\"" + shield.getId() + "\"}}}] at @s run " + s);
-                FunctionWriter.addStatment("shield_base", "execute as @a[nbt={Inventory:[{Slot: -106b, tag:{ability:\""+shield.getId()+"\"}}]}] at @s run " + s);
+                FunctionWriter.addStatment("shield_base", "execute as @a[nbt={Inventory:[{Slot: -106b, tag:{ability:\"" + shield.getId() + "\"}}]}] at @s run " + s);
             }
 
         FunctionWriter.addStatment("info", "tellraw @s [\"\",{\"text\":\"/give @s shield{ability:\\\"" + shield.getId() + "\\\"}\",\"color\":\"gold\",\"clickEvent\":{\"action\":\"suggest_command\",\"value\":\"/give @s shield{ability:\\\"" + shield.getId() + "\\\"}\"}},{\"text\":\": give yourself a(n) " + shield.getDisplayName() + " shield.\",\"color\":\"green\"}]");
@@ -297,7 +296,29 @@ class Implementer {
 
     }
 
-    static void addArmor(CustomArmor armor) {}
+    static void addArmor(CustomArmor armor) {
+        FunctionWriter.makeFunction("armor/" + armor.getId());
+
+        if (armor.getEffect() != null) {
+            for (String s : armor.getEffect())
+                FunctionWriter.addStatment("armor/" + armor.getId(), s);
+            if(armor.getParts().indexOf('h') != -1)
+                FunctionWriter.addStatment("armor_base","execute as @a[nbt={Inventory:[{Slot:103b,tag:{ability:\""+armor.getId()+"\"}}]}] at @s run function flytre:armor/" + armor.getId());
+            if(armor.getParts().indexOf('c') != -1)
+                FunctionWriter.addStatment("armor_base","execute as @a[nbt={Inventory:[{Slot:102b,tag:{ability:\""+armor.getId()+"\"}}]}] at @s run function flytre:armor/" + armor.getId());
+            if(armor.getParts().indexOf('l') != -1)
+                FunctionWriter.addStatment("armor_base","execute as @a[nbt={Inventory:[{Slot:101b,tag:{ability:\""+armor.getId()+"\"}}]}] at @s run function flytre:armor/" + armor.getId());
+            if(armor.getParts().indexOf('b') != -1)
+                FunctionWriter.addStatment("armor_base","execute as @a[nbt={Inventory:[{Slot:103b,tag:{ability:\""+armor.getId()+"\"}}]}] at @s run function flytre:armor/" + armor.getId());
+
+        }
+
+
+        String piece = armor.getParts().indexOf('h') != -1 ? "helmet" : armor.getParts().indexOf('c') != -1 ? "chestplate" : armor.getParts().indexOf('c') != -1 ? "leggings" : "boots";
+
+        FunctionWriter.addStatment("info", "tellraw @s [\"\",{\"text\":\"/give @s diamond_" + piece + "{ability:\\\"" + armor.getId() + "\\\"}\",\"color\":\"gold\",\"clickEvent\":{\"action\":\"suggest_command\",\"value\":\"/give @s diamond_" + piece + "{ability:\\\"" + armor.getId() + "\\\"}\"}},{\"text\":\": give yourself a(n) " + armor.getDisplayName() + " " + piece + ".\",\"color\":\"green\"}]");
+
+    }
 
     static void addParticle(ParticleShape p) {
         p.write();
@@ -333,7 +354,9 @@ class Implementer {
         FunctionWriter.addStatment("shield_base", "scoreboard players set @a[scores={shieldblock=1..}] shieldblock 0");
     }
 
-    static void postInitializeShield() { }
-    
-    static void postInitializeArmor() { }
+    static void postInitializeShield() {
+    }
+
+    static void postInitializeArmor() {
+    }
 }
