@@ -5,21 +5,14 @@
 
 Current Contains a basic API for making:
 
--Custom Bows
+-Custom Weapons/Armors
 
--Custom Swords
-
--Custom Abilities
-
--Custom Tridents
-
--Custom Shields
-
+-Particle Shapes
 
 
 **Coming soon:**
 
--Custom Armor
+-Resource pack helper
 
 -Map base code for lobbies etc.
 
